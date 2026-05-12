@@ -2,13 +2,24 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+app.get('/user/:id', (req, res, next) => {
+  if (req.params.id === '0') {
+    return next('route')
+  }
+  res.send(`User ${req.params.id}`)
+})
+
+app.get('/user/:id', (req, res) => {
+  res.send('Special handler for user ID 0')
+})
+
 app.get('/user', (req, res) => {
   res.send('Hello World!')
 })
 
-app.get('/user/age', (req, res) => {
+app.get('/user/age', (req, res, next) => {
   res.send('User is 25 years old')
-})
+  })
 
 app.get('/user/age/date', (req, res) => {
   res.send('User registered his age on 2020-01-01')
